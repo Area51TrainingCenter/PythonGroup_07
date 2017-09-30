@@ -1,0 +1,7 @@
+<ul>
+    {% for persona in lista %}
+        {% if persona.edad >= 20 %}
+        <li>{{ persona.nombre }}</li>
+        {% endif %}
+    {% endfor %}
+</ul>

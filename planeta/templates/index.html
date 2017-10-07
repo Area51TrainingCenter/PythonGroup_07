@@ -1,0 +1,8 @@
+<h1>Bienvenido al diario {{ nombre }}</h1>
+
+<h3>Últimas noticias</h3>
+<ul>
+    {% for noticia in noticias %}
+        <li><a href="{% url 'detalle' noticia.pk %}">{{ noticia.titular }}</a></li>
+    {% endfor %}
+</ul>

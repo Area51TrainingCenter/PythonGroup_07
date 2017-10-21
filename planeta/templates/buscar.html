@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block titulo %}Buscar{% endblock %}
+
+{% block contenido %}
+<h1>Búsqueda</h1>
+
+<form action="" method="GET">
+    Término <input type="text" name="termino" value="{{ request.GET.termino }}">
+    <input type="submit" value="Buscar">
+</form>
+
+<ul>
+    {% for noticia in noticias %}
+        <li><a href="{% url 'detalle' noticia.pk %}">{{ noticia.titular }}</a></li>
+    {% endfor %}
+</ul>
+{% endblock %}

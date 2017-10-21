@@ -1,0 +1,21 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Diario Planeta | {% block titulo %}{% endblock %}</title>
+</head>
+<body>
+<img src="{% static 'logo.jpg' %}">
+
+<h4>Navegación:</h4>
+<ul>
+    <li><a href="{% url 'home' %}">Home</a></li>
+    <li><a href="{% url 'buscar' %}">Buscar</a></li>
+</ul>
+
+{% block contenido %}{% endblock %}
+
+&copy; 2017 - Area51
+</body>
+</html>

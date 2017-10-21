@@ -1,5 +1,17 @@
-<h1>Noticia: {{ noticia.titular }}</h1>
-<h3>{{ noticia.sumilla }}</h3>
-<h4>{{ noticia.fecha_publicacion }}</h4>
+{% extends 'base.html' %}
 
-<p>{{ noticia.contenido }}</p>
+{% block titulo %}{{ noticia.titular }}{% endblock %}
+
+{% block contenido %}
+    <h1>Noticia: {{ noticia.titular }}</h1>
+    <h3>{{ noticia.sumilla }}</h3>
+    <h4>Escrito por: {{ noticia.autor.first_name }} {{ noticia.autor.last_name }}</h4>
+    <h4>Categoría: {{ noticia.categoria.nombre }}</h4>
+    <h4>{{ noticia.fecha_publicacion }}</h4>
+
+    {% if noticia.imagen %}
+        <img src="{{ noticia.imagen.url }}">
+    {% endif %}
+
+    <p>{{ noticia.contenido }}</p>
+{% endblock %}

@@ -15,12 +15,18 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
+from django.conf import settings
+from django.conf.urls.static import static
 
-from website.views import Home, DetalleNoticia
+from website.views import Home, DetalleNoticia, Buscar
+from usuarios.views import Registro
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
 
+    url(r'^registro/?$', Registro.as_view(), name='registro'),
+
+    url(r'^buscar/?$', Buscar.as_view(), name='buscar'),
     url(r'^noticias/(?P<pk>\d+)/?$', DetalleNoticia.as_view(), name='detalle'),
-    url(r'^$', Home.as_view()),
-]
+    url(r'^$', Home.as_view(), name='home'),
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

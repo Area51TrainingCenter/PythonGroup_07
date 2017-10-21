@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from noticias.models import Noticia
+from noticias.models import Noticia, Categoria
 
 
 class NoticiaAdmin(admin.ModelAdmin):
@@ -11,3 +11,4 @@ class NoticiaAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Noticia, NoticiaAdmin)
+admin.site.register(Categoria)

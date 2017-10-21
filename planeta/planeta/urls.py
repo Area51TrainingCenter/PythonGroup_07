@@ -18,15 +18,19 @@ from django.contrib import admin
 from django.conf import settings
 from django.conf.urls.static import static
 
-from website.views import Home, DetalleNoticia, Buscar
-from usuarios.views import Registro
+from website.views import Home, DetalleNoticia, Buscar, Categoria
+from usuarios.views import Registro, Logout, Login, Perfil
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
 
     url(r'^registro/?$', Registro.as_view(), name='registro'),
+    url(r'^login/?$', Login.as_view(), name='login'),
+    url(r'^logout/?$', Logout.as_view(), name='logout'),
+    url(r'^perfil/?$', Perfil.as_view(), name='perfil'),
 
     url(r'^buscar/?$', Buscar.as_view(), name='buscar'),
     url(r'^noticias/(?P<pk>\d+)/?$', DetalleNoticia.as_view(), name='detalle'),
+    url(r'^categoria/(?P<pk>\d+)/?$', Categoria.as_view(), name='categoria'),
     url(r'^$', Home.as_view(), name='home'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

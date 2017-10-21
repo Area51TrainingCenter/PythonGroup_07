@@ -58,3 +58,17 @@ class Noticia(models.Model):
     def __str__(self):
         return self.titular
 
+
+class Comentario(models.Model):
+    usuario = models.ForeignKey(User)
+
+    noticia = models.ForeignKey(Noticia)
+
+    texto = models.TextField(
+        blank=False,
+        null=False
+    )
+
+    fecha_publicacion = models.DateTimeField(
+        auto_now_add=True
+    )

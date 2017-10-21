@@ -14,4 +14,18 @@
     {% endif %}
 
     <p>{{ noticia.contenido }}</p>
+
+    <h2>Comentarios</h2>
+    <ul>
+        {% for comentario in comentarios %}
+            <li>{{ comentario.texto }} - {{ comentario.usuario.username }} ({{ comentario.fecha_publicacion }})</li>
+        {% endfor %}
+    </ul>
+
+    <h2>Comenta</h2>
+    <form action="" method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="Comentar">
+    </form>
 {% endblock %}

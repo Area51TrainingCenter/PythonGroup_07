@@ -1,6 +1,8 @@
 from django.db.models import Q
-from django.views.generic import TemplateView, DetailView, ListView
-from noticias.models import Noticia
+from django.shortcuts import redirect
+from django.views.generic import TemplateView, DetailView, ListView, FormView
+from noticias.models import Noticia, Categoria as CategoriaModel
+from website.forms import ComentarioForm
 
 
 class Home(TemplateView):
@@ -13,10 +15,24 @@ class Home(TemplateView):
         return contexto
 
 
-class DetalleNoticia(DetailView):
+class DetalleNoticia(DetailView, FormView):
     template_name = 'detalle.html'
     model = Noticia
     context_object_name = 'noticia'
+    form_class = ComentarioForm
+    # success_url = '??????'
+
+    def form_valid(self, form):
+        comentario = form.save(commit=False)
+        comentario.usuario = self.request.user
+        comentario.noticia = self.get_object()
+        comentario.save()
+        return redirect('detalle', pk=self.get_object().pk)
+
+    def get_context_data(self, **kwargs):
+        contexto = super(DetalleNoticia, self).get_context_data(**kwargs)
+        contexto['comentarios'] = self.get_object().comentario_set.order_by('-fecha_publicacion')
+        return contexto
 
 
 class Buscar(ListView):
@@ -38,3 +54,17 @@ class Buscar(ListView):
         )
 
         return queryset
+
+
+class Categoria(ListView):
+    template_name = 'categoria.html'
+    model = Noticia
+    context_object_name = 'noticias'
+
+    def get_context_data(self, **kwargs):
+        contexto = super(Categoria, self).get_context_data(**kwargs)
+        contexto['categoria'] = CategoriaModel.objects.get(pk=self.kwargs['pk'])
+        return contexto
+
+    def get_queryset(self):
+        return Noticia.objects.filter(categoria__pk=self.kwargs['pk']).order_by('-fecha_publicacion')
